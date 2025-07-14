@@ -11,6 +11,6 @@ from accounts.models import User
 class UserAdmin(admin.ModelAdmin):
     """Отображение модели пользователя"""
 
-    list_display = ["phone", "avatar"]
-    list_filter = ["email"]
-    search_fields = ["email", "phone"]
+    list_display = ("phone", "avatar",)
+    list_filter = ("email",)
+    search_fields = ("email", "phone",)
