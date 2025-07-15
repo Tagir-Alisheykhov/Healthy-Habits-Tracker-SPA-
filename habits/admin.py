@@ -17,7 +17,10 @@ class HabitAdmin(admin.ModelAdmin):
         "reward",
         "execution_time",
         "is_public",
-        "last_completed"
+        "last_completed",
     )
-    list_filter = ("time", "user",)
+    list_filter = (
+        "time",
+        "user",
+    )
     search_fields = ("user", "time", "is_public", "reward")

@@ -9,9 +9,5 @@ from .views import HabitModelViewSet
 
 app_name = HabitsConfig.name
 router = DefaultRouter()
-router.register(
-    r"habits",
-    HabitModelViewSet,
-    basename="habit"
-)
+router.register(r"habits", HabitModelViewSet, basename="habit")
 urlpatterns = router.urls
