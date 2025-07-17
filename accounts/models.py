@@ -27,9 +27,16 @@ class User(AbstractUser):
         help_text="Укажите телефон",
     )
     avatar = models.ImageField(upload_to="avatars/", blank=True, null=True)
+    tg_chat_id = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        verbose_name="Телеграм chat-id",
+        help_text="Укажите телеграм chat-id",
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.email
+        return str(self.email)

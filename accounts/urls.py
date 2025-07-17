@@ -1,14 +1,21 @@
 """
 Конечные точки API приложения `accounts`.
 """
-
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from .apps import AccountsConfig
-from .views import UserModelViewSet
+from accounts.apps import AccountsConfig
+from accounts.views import UserModelViewSet
 
 
 router = DefaultRouter()
-router.register(r"accounts", UserModelViewSet, basename="user")
+router.register(r"", UserModelViewSet, basename="user")
 app_name = AccountsConfig.name
-urlpatterns = router.urls
+urlpatterns = [
+    path('me/', UserModelViewSet.as_view({
+        'get': 'retrieve',
+        'put': 'update',
+        'patch': 'partial_update'
+    }), name='user-me'),
+]
+urlpatterns += router.urls

@@ -3,6 +3,7 @@
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from config.shadow import ShadowKeys
@@ -18,13 +19,16 @@ DEBUG = shadow.DEBUG
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
     "django.contrib.auth",
-    "django.contrib.contenttypes",
+    "django.contrib.admin",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.contenttypes",
     "django.contrib.staticfiles",
+    "rest_framework_simplejwt",
+    "django_celery_beat",
     "rest_framework",
+    "django_filters",
     "accounts",
     "habits",
 ]
@@ -39,7 +43,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+
 ROOT_URLCONF = "config.urls"
+
 
 TEMPLATES = [
     {
@@ -59,18 +65,23 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 
-# REST_FRAMEWORK = {
-#     "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend"),
-#     "DEFAULT_AUTHENTICATION_CLASSES": (
-#         "rest_framework_simplejwt.authentication.JWTAuthentication",
-#     ),
-#     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    ),
+}
 
-# SIMPLE_JWT = {
-#     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1440),
-#     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-# }
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1440),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
+
 
 DATABASES = {
     "default": {
@@ -98,6 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
 
 LANGUAGE_CODE = "en-us"
 
@@ -130,12 +142,12 @@ CELERY_TIMEZONE = "Europe/Moscow"
 # CELERY_TASK_TIME_LIMIT = 30 * 60
 
 # celery-beat настройка
-# CELERY_BEAT_SCHEDULE = {
-#     "deactivate-inactive-users": {
-#         "task": "users.tasks.last_user_login",
-#         "schedule": 10.0,
-#     },
-# }
+CELERY_BEAT_SCHEDULE = {
+    "deactivate-inactive-users": {
+        "task": "habits.tasks.check_and_send_habit_reminders",
+        "schedule": timedelta(minutes=15),
+    },
+}
 
 # Настройка Redis
 CACHE_ENABLED = shadow.REDIS_CACHE_ENABLED

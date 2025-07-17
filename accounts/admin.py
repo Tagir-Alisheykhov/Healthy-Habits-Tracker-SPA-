@@ -12,10 +12,11 @@ class UserAdmin(admin.ModelAdmin):
     """Отображение модели пользователя"""
 
     list_display = (
+        "email",
         "phone",
         "avatar",
     )
-    list_filter = ("email",)
+    list_filter = ("email", "phone")
     search_fields = (
         "email",
         "phone",
