@@ -29,7 +29,9 @@ INSTALLED_APPS = [
     "django_celery_beat",
     "rest_framework",
     "django_filters",
+    "corsheaders",
     "accounts",
+    "drf_yasg",
     "habits",
 ]
 
@@ -41,6 +43,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 
@@ -66,15 +69,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend',
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated",
-    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
 }
 
 SIMPLE_JWT = {
@@ -169,3 +168,13 @@ EMAIL_HOST_USER = shadow.EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = shadow.EMAIL_HOST_PASSWORD
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
+
+
+# Настойка CORS
+CORS_ALLOWED_ORIGINS = [shadow.CORS_FRONTEND]
+CSRF_TRUSTED_ORIGINS = [
+    shadow.CORS_FRONTEND,
+    # shadow.CORS_BACKEND # Если разные домены
+]
+CORS_ALLOW_ALL_ORIGINS = shadow.CORS_ALLOW_ALL_ORIGINS
+# CORS_ALLOW_CREDENTIALS = True  # Если фронтенд отправляет куки

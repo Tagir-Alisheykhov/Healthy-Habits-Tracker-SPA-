@@ -16,6 +16,13 @@ class ShadowKeys:
     SECRET_KEY = os.getenv("SECRET_KEY")
     DEBUG = True if os.getenv("DEBUG") == "True" else False
 
+    # настройка доступа cors
+    CORS_ALLOW_ALL_ORIGINS = (
+        True if os.getenv("CORS_ALLOW_ALL_ORIGINS") == "True" else False
+    )
+    CORS_FRONTEND = os.getenv("CORS_FRONTEND")
+    CORS_BACKEND = os.getenv("CORS_BACKEND")
+
     # create superuser
     SUPERUSER_FIRST_NAME = os.getenv("SUPERUSER_FIRST_NAME")
     SUPERUSER_LAST_NAME = os.getenv("SUPERUSER_LAST_NAME")

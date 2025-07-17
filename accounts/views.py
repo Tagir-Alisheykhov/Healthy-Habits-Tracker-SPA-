@@ -3,10 +3,7 @@
 """
 
 from rest_framework import viewsets
-from rest_framework.permissions import (
-    IsAdminUser, AllowAny,
-    IsAuthenticated, OR, AND
-)
+from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated, OR, AND
 
 from accounts.permissions import IsOwner
 from accounts.serializers import UserSerializer
@@ -29,6 +26,6 @@ class UserModelViewSet(viewsets.ModelViewSet):
 
     def get_object(self):
         """Получение информации о текущем пользователе"""
-        if self.request.path.endswith('/me/'):
+        if self.request.path.endswith("/me/"):
             return self.request.user
         return super().get_object()

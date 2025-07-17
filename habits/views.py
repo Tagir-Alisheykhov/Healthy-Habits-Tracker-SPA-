@@ -2,6 +2,7 @@
 Представления приложения `habits`.
 """
 
+from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q
 from rest_framework import viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
@@ -42,6 +43,8 @@ class HabitModelViewSet(viewsets.ModelViewSet):
         - При ?is_public=true: только публичные (общедоступные)
         """
         queryset = super().get_queryset()
+        if isinstance(self.request.user, AnonymousUser):
+            return queryset.filter(is_public=True)
         if self.request.query_params.get("is_public") == "true":
             return queryset.filter(is_public=True)
         if self.request.user.is_superuser:

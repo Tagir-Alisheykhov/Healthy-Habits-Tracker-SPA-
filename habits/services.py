@@ -15,10 +15,7 @@ def send_telegram_message(chat_id: int, message: str) -> None:
     - message: содержит текст сообщения.
     """
     url = f"{shadow.TG_BASE_URL}{shadow.TG_BOT_HTTP_TOKEN}/sendMessage"
-    params = {
-        "text": message,
-        "chat_id": chat_id
-    }
+    params = {"text": message, "chat_id": chat_id}
     response = requests.get(url, params=params)
     if response.status_code == 200:
         json_data = response.json()
