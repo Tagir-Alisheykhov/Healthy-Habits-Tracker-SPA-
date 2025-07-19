@@ -26,8 +26,10 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
+
     # Admin
     path("admin/", admin.site.urls),
+
     # API Documentation
     path(
         "swagger/",
@@ -35,9 +37,13 @@ urlpatterns = [
         name="schema-swagger-ui",
     ),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+
     # Applications
     path("", include("habits.urls", namespace="habits")),
     path("accounts/", include("accounts.urls", namespace="accounts")),
+
+    # Authentication
     path("login/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

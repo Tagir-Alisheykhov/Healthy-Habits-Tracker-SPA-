@@ -27,9 +27,7 @@ def check_and_send_habit_reminders():
     habits_to_remind = Habit.objects.filter(
         time__gte=now, time__lt=now + timedelta(hours=1), user__tg_chat_id__isnull=False
     )
-
     for habit in habits_to_remind:
-        print(f"Habit time: {habit.time}, Now: {now}")
         if should_send_reminder(habit, now):
             send_habit_reminder.delay(habit.id)
 
@@ -69,9 +67,6 @@ def send_habit_reminder(habit_id):
             f"Периодичность: {habit.get_periodicity_display()}\n"
             f"Вознаграждение: {habit.reward or 'нет'}"
         )
-        print(
-            "Отправляем сообщение..."
-        )  # Для проверки, доходит ли выполнение до этой строки
         send_telegram_message(chat_id=chat_id, message=message)
         habit.last_completed = timezone.now()
         habit.save()
