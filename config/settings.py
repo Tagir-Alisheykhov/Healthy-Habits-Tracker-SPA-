@@ -130,9 +130,9 @@ AUTH_USER_MODEL = "accounts.User"
 
 # Настройка для celery
 # URL-адрес брокера сообщений
-CELERY_BROKER_URL = shadow.CELERY_URL
+CELERY_BROKER_URL = shadow.CELERY_BROKER_URL
 # URL-адрес брокера результатов, также Redis
-CELERY_RESULT_BACKEND = shadow.CELERY_URL
+CELERY_RESULT_BACKEND = shadow.REDIS_BACKEND
 # Часовой пояс для работы Celery
 CELERY_TIMEZONE = "Europe/Moscow"
 # Флаг отслеживания выполнения задач
