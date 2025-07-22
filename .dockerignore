@@ -1,0 +1,33 @@
+# Системные файлы
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+Thumbs.db
+
+# Python-кеш и виртуальное окружение
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# Git
+.git/
+.gitignore
+
+# Локальные настройки
+.env
+.env.local
+*.env
+docker-compose.override.yml
+
+# Логи
+*.log
+
+# Статика (если собирается при деплое)
+/static/
+
+*.log
+*.tmp
+*.bak

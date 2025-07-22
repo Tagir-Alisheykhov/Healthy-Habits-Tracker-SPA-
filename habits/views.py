@@ -4,6 +4,8 @@
 
 from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
 from rest_framework import viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import AND, IsAuthenticated, IsAdminUser
@@ -60,3 +62,9 @@ class HabitModelViewSet(viewsets.ModelViewSet):
         elif self.action in ("update", "partial_update", "destroy"):
             return [AND(IsOwner(), IsAuthenticated())]
         return [IsAdminUser()]
+
+
+@require_GET
+def health_check(request):
+    """Простая проверка работоспособности сервиса"""
+    return JsonResponse({"status": "ok", "service": "Django"})

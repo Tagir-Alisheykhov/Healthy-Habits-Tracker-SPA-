@@ -15,10 +15,13 @@
 [![Celery](https://img.shields.io/badge/Celery-5.3+-informational?logo=celery&logoColor=white)](https://docs.celeryq.dev/en/stable/)
 [![Celery Beat](https://img.shields.io/badge/Celery_Beat-2.5.0-blueviolet?logo=clockify&logoColor=white)](https://pypi.org/project/django-celery-beat/)
 [![Telegram API Docs](https://img.shields.io/badge/Telegram_API_Documentation-6.9-2CA5E0?logo=telegram&logoColor=white)](https://core.telegram.org/api)
+[![Docker](https://img.shields.io/badge/Docker-24.0+-blue?logo=docker&logoColor=white)](https://docs.docker.com/)
+[![Docker Compose](https://img.shields.io/badge/Docker_Compose-2.23+-blue?logo=docker&logoColor=white)](https://docs.docker.com/compose/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue?logo=postgresql&logoColor=white)](https://hub.docker.com/_/postgres)
 
 ---
 
-## 🧰 _Установка и настройка проекта_
+## 🧰 _Настройка проекта_
 
 ### 1. Клонируйте репозиторий
 ```commandline
@@ -28,63 +31,33 @@ git clone git@github.com:Tagir-Alisheykhov/Healthy-Habits-Tracker-SPA-.git
 cd Healthy-Habits-Tracker-SPA  
 ```
 
-### 2. Настройка виртуального окружения
->Для начала убедитесь, что на вашем ПК установлен `poetry`
-```bash
-poetry install    # Установка зависимостей в виртуальное окружение
-```
-```bash
-poetry shell    # Активация виртуального окружения 
-```
-
-### 3. Заполнение переменных окружения `.env` 
+### 2. Заполнение переменных окружения `.env` 
 > Скопируйте шаблонный файл (`.env.example`) в корневой директории проекта и создайте 
 > `.env` (без `.example`), заполнив 
 > конфигурационные поля реальными данными. Программа автоматически 
 > загрузит эти данные для работы приложения. 
 
-### 4. Миграции
->Выполните миграцию в базу данных
-```bash
-python manage.py migrate
-```
 
-### 5. Запуск Celery `(отложенные и периодические задачи)`
-> `celery` и `celery-beat` установились на этапе инициализации 
-> виртуального окружения. Две следующие команды должны быть запущенны параллельно 
-> в разных окнах.
-```bash
-celery -A config worker -l info -P eventlet  # Запускаем `celery worker`
-```
-```bash
-celery -A config beat -l info -S django  # Запускаем `celery-beat`
-```
+## 🚀 Запуск проекта с Docker Compose
 
-### 6. Создание суперпользователя `(опционально)`
+### 1. Сборка и запуск контейнеров
 
-> По желанию вы можете создать суперпользователя. Но перед этим,
-> должны быть заполнены соответствующие переменные окружения.
+Перед запуском программы необходимо убедиться, что у вас на ПК установлен `Docker`.  
+Выполните команду в корне проекта (где находится `docker-compose.yml`):
+
 ```bash
-python manage.py csu
+docker-compose up -d --build
 ```
-
-### 7. Запуск сервера
-```bash
-python manage.py runserver
-```
->После успешного запуска откройте: http://localhost:8000
-
----
 
 ## 📚 _Документация API_
 
 Проект включает автоматически генерируемую документацию API с использованием Swagger и ReDoc:
 
 >- **Swagger UI** - интерактивная документация с возможностью тестирования API:  
-  [http://localhost:8000/swagger/](http://localhost:8000/swagger/)
+  [http://127.0.0.1:8000/swagger/](http://localhost:8000/swagger/)
   
 >- **ReDoc** - альтернативное представление документации:  
-  [http://localhost:8000/redoc/](http://localhost:8000/redoc/)
+  [http://127.0.0.1:8000/redoc/](http://localhost:8000/redoc/)
 
 ### Документация включает:
 - Все доступные эндпоинты API
@@ -106,12 +79,19 @@ python manage.py runserver
 ---
 
 ## 🛠 _Технологический стек_
-- Backend: `Django` + `Django REST Framework`
-- База данных: `PostgreSQL`
-- Аутентификация: `JWT` (`SimpleJWT`)
-- Документация API: `drf-yasg` (`Swagger`/`ReDoc`)
-- Фоновые задачи: `Celery`
-- Оповещения: `Telegram API` 
+### Основной стек
+- `Django 3.2` + `DRF 3.16` - backend
+- `PostgreSQL 15` - основная БД
+- `Redis` - кеш и брокер для Celery
+
+### Инфраструктура
+- `Docker` + `Docker Compose` - контейнеризация
+- `Celery` + `Celery Beat` - асинхронные задачи
+
+### Дополнительно
+- `JWT` (`SimpleJWT`) - аутентификация
+- `drf-yasg` - документация API
+- `Telegram Bot API` - нотификации
 
 ---
 
