@@ -25,7 +25,6 @@ RUN apt-get update && \
 # Copy application code
 COPY . .
 
-COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 ENTRYPOINT ["./entrypoint.sh"]
 
