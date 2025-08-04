@@ -8,10 +8,10 @@
 """
 
 from datetime import timedelta
-from django.conf import settings
 
-from django.utils import timezone
 from celery import shared_task
+from django.conf import settings
+from django.utils import timezone
 from pytz import timezone as pytz_timezone
 
 from habits.models import Habit

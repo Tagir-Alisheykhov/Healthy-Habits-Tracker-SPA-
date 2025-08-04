@@ -6,17 +6,21 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 from config.shadow import ShadowKeys
+
+load_dotenv()
 
 shadow = ShadowKeys()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = shadow.SECRET_KEY
+SECRET_KEY = os.getenv("SECRET_KEY", "dummy-secret-key-for-debug")
 
 DEBUG = shadow.DEBUG
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "django.contrib.auth",
@@ -81,18 +85,17 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": shadow.DB_NAME,
-        "USER": shadow.DB_USER,
-        "PASSWORD": shadow.DB_PASSWORD,
-        "HOST": shadow.DB_HOST,
-        "PORT": shadow.DB_PORT,
+        "NAME": os.getenv("POSTGRES_DB"),
+        "USER": os.getenv("POSTGRES_USER"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST": os.getenv("POSTGRES_HOST"),
+        "PORT": os.getenv("POSTGRES_PORT"),
+        "OPTIONS": {"client_encoding": "UTF8"},
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -119,6 +122,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "static"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

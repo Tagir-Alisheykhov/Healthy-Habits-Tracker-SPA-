@@ -8,7 +8,6 @@ from rest_framework.routers import DefaultRouter
 from accounts.apps import AccountsConfig
 from accounts.views import UserModelViewSet
 
-
 router = DefaultRouter()
 router.register(r"", UserModelViewSet, basename="user")
 app_name = AccountsConfig.name

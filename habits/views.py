@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from rest_framework import viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
-from rest_framework.permissions import AND, IsAuthenticated, IsAdminUser
+from rest_framework.permissions import AND, IsAdminUser, IsAuthenticated
 
 from habits.models import Habit
 from habits.paginators import HabitsPagination

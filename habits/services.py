@@ -3,6 +3,7 @@
 """
 
 import requests
+
 from config.shadow import ShadowKeys
 
 shadow = ShadowKeys()

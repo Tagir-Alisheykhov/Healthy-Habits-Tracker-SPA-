@@ -1,6 +1,7 @@
 """
 Конечные точки API.
 """
+
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
@@ -11,8 +12,6 @@ app_name = HabitsConfig.name
 router = DefaultRouter()
 router.register(r"habits", HabitModelViewSet, basename="habit")
 
-urlpatterns = [
-    path("health/", health_check, name="health-check")
-]
+urlpatterns = [path("health/", health_check, name="health-check")]
 
 urlpatterns += router.urls
