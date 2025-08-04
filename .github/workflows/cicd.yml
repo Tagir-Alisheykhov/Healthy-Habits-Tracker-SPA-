@@ -80,7 +80,7 @@ jobs:
         exit 1
     - name: Run tests
       run: |
-        docker compose exec web python manage.py test
+        docker compose exec backend python manage.py test
     - name: Stop services
       run: docker compose down
 
