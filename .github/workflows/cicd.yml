@@ -80,7 +80,7 @@ jobs:
         exit 1
     - name: Check database connection
       run: |
-        docker compose exec web python -c "
+        docker compose exec backend python -c "
         import os, psycopg2;
         conn = psycopg2.connect(
             dbname=os.getenv('POSTGRES_DB'),
