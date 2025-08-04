@@ -1,5 +1,5 @@
 # Build stage
-FROM python:3.11 as builder
+FROM python:3.11 AS builder
 WORKDIR /app
 
 # Install Poetry and dependencies
@@ -25,7 +25,6 @@ RUN apt-get update && \
 # Copy application code
 COPY . .
 
-COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
