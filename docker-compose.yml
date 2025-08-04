@@ -47,11 +47,6 @@ services:
       - "8000:8000"
     volumes:
       - django_static:/app/static/
-    healthcheck:
-      test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
-      interval: 5s
-      timeout: 5s
-      retries: 5
 
   web:
      image: nginx:1.19.3

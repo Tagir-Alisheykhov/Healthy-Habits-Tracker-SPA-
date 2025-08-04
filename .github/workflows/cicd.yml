@@ -41,8 +41,19 @@ jobs:
         CORS_ALLOW_ALL_ORIGINS=False
         EOL
         docker compose up -d --build
+        echo "Waiting a moment for services to initialize..."
+        sleep 10
+        echo "=== Docker Compose Status ==="
+        docker compose ps
+        echo "=== DB Logs ==="
+        docker compose logs db
+        echo "=== Redis Logs ==="
+        docker compose logs redis
+        echo "=== Backend Logs ==="
+        docker compose logs backend || echo "Backend logs not available or service not started"
         docker compose logs db
         docker compose logs redis
+
     - name: Wait for PostgreSQL to be ready
       run: |
         echo "Checking PostgreSQL health..."
