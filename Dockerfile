@@ -22,15 +22,10 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     pip install --no-cache-dir gunicorn==21.2.0
 
-COPY entrypoint.sh ./
-RUN chmod +x entrypoint.sh
-
 # Copy application code
 COPY . .
 
 RUN python manage.py collectstatic --noinput
-
-ENTRYPOINT ["./entrypoint.sh"]
 
 # Gunicorn start
 CMD ["gunicorn", "--workers=4", "--threads=2", "--timeout=60", "--bind=0.0.0.0:8000", "config.wsgi:application"]
