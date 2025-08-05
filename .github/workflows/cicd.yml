@@ -85,11 +85,11 @@ jobs:
       - name: Deploy to server
         run: |
           cat > .env <<EOL
-          POSTGRES_DB=${{ secrets.DB_NAME }}
-          POSTGRES_USER=${{ secrets.DB_USER }}
-          POSTGRES_PASSWORD=${{ secrets.DB_PASSWORD }}
-          POSTGRES_HOST=${{ secrets.DB_HOST }}
-          POSTGRES_PORT=${{ secrets.DB_PORT }}
+          POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
           SECRET_KEY=${{ secrets.SECRET_KEY }}
           DEBUG=${{ secrets.DEBUG }}
           REDIS_BACKEND=${{ secrets.REDIS_BACKEND }}
