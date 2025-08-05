@@ -101,7 +101,7 @@ jobs:
           CELERY_URL=${{ secrets.CELERY_URL }}
           GITHUB_SHA=${{ github.sha }}            
           EOL
-          scp -o StrictHostKeyChecking=no docker-compose.yml .env ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/var/www/healthy_habits_tracker/
+          scp -o StrictHostKeyChecking=no docker-compose.yml .env nginx.conf ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/var/www/healthy_habits_tracker/
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           mkdir -p /var/www/healthy_habits_tracker/
           cd /var/www/healthy_habits_tracker/
