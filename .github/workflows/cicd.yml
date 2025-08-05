@@ -109,6 +109,5 @@ jobs:
           docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/healthy_habits_tracker:${{ github.sha }}
           docker compose up -d
           EOF
-
 #          sudo systemctl daemon-reload
 #          sudo systemctl restart healthy_habits_tracker

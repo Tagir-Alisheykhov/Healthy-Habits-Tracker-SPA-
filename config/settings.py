@@ -175,18 +175,24 @@ SERVER_EMAIL = EMAIL_HOST_USER
 
 
 # Настройка CORS
-CORS_ALLOW_ALL_ORIGINS = os.getenv(str(shadow.CORS_ALLOW_ALL_ORIGINS), 'False').lower() == 'true'
+CORS_ALLOW_ALL_ORIGINS = (
+    os.getenv(str(shadow.CORS_ALLOW_ALL_ORIGINS), "False").lower() == "true"
+)
 if not CORS_ALLOW_ALL_ORIGINS:
-    cors_frontend = os.getenv(shadow.CORS_FRONTEND, '')
+    cors_frontend = os.getenv(shadow.CORS_FRONTEND, "")
     if cors_frontend:
         # Разделяем строку по запятым и убираем лишние пробелы
-        CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_frontend.split(',') if origin.strip()]
+        CORS_ALLOWED_ORIGINS = [
+            origin.strip() for origin in cors_frontend.split(",") if origin.strip()
+        ]
     else:
         CORS_ALLOWED_ORIGINS = []
 else:
     CORS_ALLOWED_ORIGINS = []
-csrf_origins = os.getenv(shadow.CORS_FRONTEND, '')
+csrf_origins = os.getenv(shadow.CORS_FRONTEND, "")
 if csrf_origins:
-    CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_origins.split(',') if origin.strip()]
+    CSRF_TRUSTED_ORIGINS = [
+        origin.strip() for origin in csrf_origins.split(",") if origin.strip()
+    ]
 else:
     CSRF_TRUSTED_ORIGINS = []

@@ -7,8 +7,11 @@ from pytz import timezone as pytz_timezone
 
 from accounts.models import User
 from habits.models import Habit
-from habits.tasks import (check_and_send_habit_reminders, send_habit_reminder,
-                          should_send_reminder)
+from habits.tasks import (
+    check_and_send_habit_reminders,
+    send_habit_reminder,
+    should_send_reminder,
+)
 
 
 class HabitTasksTestCase(TestCase):
