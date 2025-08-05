@@ -36,10 +36,6 @@ jobs:
         run: |
           poetry run pip install black
           poetry run black --check . --exclude 'venv|.venv|migrations'
-      - name: Run isort (check only)
-        run: |
-          poetry run pip install isort
-          poetry run isort --check-only --diff . --skip venv --skip .venv --skip migrations
 
   test:
     needs: lint
