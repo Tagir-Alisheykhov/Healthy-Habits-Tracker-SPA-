@@ -1,7 +1,48 @@
-# Трекер полезных привычек
->В 2018 году Джеймс Клир написал книгу «Атомные привычки», 
-которая посвящена приобретению новых полезных привычек и искоренению старых плохих привычек.
-Данное приложение работает по основным принципам данной книги.
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  .habit-tracker-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    max-width: 900px;
+  }
+  .habit-tracker-header h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 2.2em;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  }
+  .habit-tracker-header .subtitle {
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+  }
+  .habit-tracker-header p {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 1em;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="habit-tracker-header">
+  <h1>ТРЕКЕР ПОЛЕЗНЫХ ПРИВЫЧЕК</h1>
+  <div class="subtitle">Вдохновлено книгой «Атомные привычки» Джеймса Клира</div>
+  <p>В 2018 году Джеймс Клир написал книгу «Атомные привычки», 
+  которая посвящена приобретению новых полезных привычек и искоренению старых плохих привычек.
+  Данное приложение работает по основным принципам данной книги.</p>
+</div>
+
+</body>
+</html>
 
 [![Django](https://img.shields.io/badge/Django-3.2.18-blue?logo=django&logoColor=white)](https://www.djangoproject.com/)
 [![Django REST](https://img.shields.io/badge/DRF-3.16.0-red?logo=json&logoColor=white)](https://www.django-rest-framework.org/)
@@ -18,6 +59,10 @@
 [![Docker](https://img.shields.io/badge/Docker-24.0+-blue?logo=docker&logoColor=white)](https://docs.docker.com/)
 [![Docker Compose](https://img.shields.io/badge/Docker_Compose-2.23+-blue?logo=docker&logoColor=white)](https://docs.docker.com/compose/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue?logo=postgresql&logoColor=white)](https://hub.docker.com/_/postgres)
+
+---
+## ▶️ Ссылка на сервис
+<a href="http://89.169.187.28/health/" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; border: none; cursor: pointer;">Перейти к сервису</a>
 
 ---
 
@@ -38,15 +83,39 @@ cd Healthy-Habits-Tracker-SPA
 > загрузит эти данные для работы приложения. 
 
 
-## 🚀 Запуск проекта с Docker Compose
+## 🚀 Запуск проекта
 
-### 1. Сборка и запуск контейнеров
+### Вариант 1: Сборка и запуск контейнеров с Docker Compose
 
 Перед запуском программы необходимо убедиться, что у вас на ПК установлен `Docker`.  
 Выполните команду в корне проекта (где находится `docker-compose.yml`):
 
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
+```
+Выполнение миграций базы данных
+```bash
+docker compose exec backend python manage.py migrate
+```
+Сборка статических файлов
+```bash
+docker-compose exec backend python manage.py collectstatic --noinput
+```
+Создание суперпользователя (опционально)
+```bash
+docker-compose exec backend python manage.py csu
+```
+> Обратите внимание! Для локальной сборки, некоторые конфигурационные данные 
+> автоматически переопределяются в `docker-compose.override.yml`. При автодеплое файл `docker-compose.override.yml` удаляется.   
+
+### Вариант 2: Запуск локально (для разработки)
+Активируйте виртуальное окружение Poetry
+```bash
+poetry shell
+```
+Запустите сервер разработки Django
+```bash
+python manage.py runserver
 ```
 
 ## 📚 _Документация API_
@@ -54,10 +123,10 @@ docker-compose up -d --build
 Проект включает автоматически генерируемую документацию API с использованием Swagger и ReDoc:
 
 >- **Swagger UI** - интерактивная документация с возможностью тестирования API:  
-  [http://127.0.0.1:8000/swagger/](http://localhost:8000/swagger/)
+  [http://89.169.187.28/swagger/](http://89.169.187.28/swagger/)
   
 >- **ReDoc** - альтернативное представление документации:  
-  [http://127.0.0.1:8000/redoc/](http://localhost:8000/redoc/)
+  [http://89.169.187.28/redoc/](http://89.169.187.28/redoc/)
 
 ### Документация включает:
 - Все доступные эндпоинты API
@@ -75,6 +144,25 @@ docker-compose up -d --build
 - JWT-аутентификация
 - Разграничение прав доступа
 - Регистрация новых пользователей
+
+---
+
+## 🗄️ Структура проекта
+- `healthy-habits-tracker/`
+- ├── `.github/`           # Настройка CI/CD  
+- ├── `accounts/`          # Приложение для управления пользователями
+- ├── `habits/`            # Приложение для управления привычками
+- ├── `config/ `           # Настройки проекта (settings, urls, wsgi)
+- ├── `static/  `          # Статические файлы
+- ├── `templates/`         # Шаблоны (если используются)
+- ├── `manage.py  `        # Скрипт управления Django
+- ├──` Dockerfile  `       # Конфигурация Docker для приложения
+- ├── `docker-compose.yml` # Конфигурация Docker Compose
+- ├── `docker-compose.override.yml` # Переопределение конфигурации для локальной сборки 
+- ├── `nginx.conf         `# Конфигурация Nginx
+- ├── `.env.sample        `# Шаблон файла переменных окружения
+- ├── `pyproject.toml     `# Конфигурация Poetry
+- └── `README.md          `# Документация проекта
 
 ---
 
