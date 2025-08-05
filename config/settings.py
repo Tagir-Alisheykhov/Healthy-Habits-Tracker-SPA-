@@ -175,7 +175,7 @@ SERVER_EMAIL = EMAIL_HOST_USER
 
 
 # Настройка CORS
-CORS_ALLOW_ALL_ORIGINS = os.getenv(shadow.CORS_ALLOW_ALL_ORIGINS, 'False').lower() == 'true'
+CORS_ALLOW_ALL_ORIGINS = os.getenv(str(shadow.CORS_ALLOW_ALL_ORIGINS), 'False').lower() == 'true'
 if not CORS_ALLOW_ALL_ORIGINS:
     cors_frontend = os.getenv(shadow.CORS_FRONTEND, '')
     if cors_frontend:
