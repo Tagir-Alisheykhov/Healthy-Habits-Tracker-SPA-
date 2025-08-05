@@ -25,7 +25,5 @@ RUN apt-get update && \
 # Copy application code
 COPY . .
 
-RUN python manage.py collectstatic --noinput
-
 # Gunicorn start
-CMD ["gunicorn", "--workers=4", "--threads=2", "--timeout=60", "--bind=0.0.0.0:8000", "config.wsgi:application"]
+CMD python manage.py collectstatic --noinput, gunicorn --workers=4 --threads=2 --timeout=60 --bind=0.0.0.0:8000 config.wsgi:application
