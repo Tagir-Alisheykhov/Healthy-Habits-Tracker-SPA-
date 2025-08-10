@@ -3,11 +3,11 @@
 """
 
 from rest_framework import viewsets
-from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated, OR, AND
+from rest_framework.permissions import AND, OR, AllowAny, IsAdminUser, IsAuthenticated
 
+from accounts.models import User
 from accounts.permissions import IsOwner
 from accounts.serializers import UserSerializer
-from accounts.models import User
 
 
 class UserModelViewSet(viewsets.ModelViewSet):

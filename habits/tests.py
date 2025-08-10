@@ -1,15 +1,17 @@
 from datetime import timedelta
+from unittest.mock import patch
+
 from django.test import TestCase
 from django.utils import timezone
 from pytz import timezone as pytz_timezone
+
 from accounts.models import User
 from habits.models import Habit
 from habits.tasks import (
     check_and_send_habit_reminders,
-    should_send_reminder,
     send_habit_reminder,
+    should_send_reminder,
 )
-from unittest.mock import patch
 
 
 class HabitTasksTestCase(TestCase):
